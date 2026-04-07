@@ -268,31 +268,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 .map(([name]) => name);
 
             if (crowdedPlaces.length > 0) {
-                return \`Right now, \${crowdedPlaces.join(' and ')} are experiencing heavy traffic. If you want to relax, Tech Expo Hall is a great quieter spot.\`;
+                return `Right now, ${crowdedPlaces.join(' and ')} are experiencing heavy traffic. If you want to relax, Tech Expo Hall is a great quieter spot.`;
             } else {
-                return 'Crowds are actually pretty manageable everywhere right now! It\\'s a great time to visit the Main Stage.';
+                return 'Crowds are actually pretty manageable everywhere right now! Its a great time to visit the Main Stage.';
             }
         }
-        
+
         // Location Awareness
         if (lower.includes('where am i') || lower.includes('my location') || lower.includes('where is this')) {
-            return \`You are currently near the \${state.userLocation}. Let me know where you'd like to go next!\`;
+            return `You are currently near the ${state.userLocation}. Let me know where you'd like to go next!`;
         }
 
         // Standard Fallbacks
         const intents = {
-            'bathroom': 'The closest restrooms are located in the North Hall, and there\\'s another set near the East Gate.',
+            'bathroom': "The closest restrooms are located in the North Hall, and there's another set near the East Gate.",
             'schedule': 'The keynote is ongoing at the Main Stage. Next up is the Tech Panel in Expo Hall B at 1:00 PM.',
-            'lost': 'Lost and Found is located at the Main Registration desk at the South Entrance. I hope you find your item!',
+            'lost': "Lost and Found is located at the Main Registration desk at the South Entrance. I hope you find your item!",
             'ticket': 'You can manage tickets at the Kiosks near the South Gate Registration area.',
             'parking': 'All-day parking is available in the West Garage for $15. Shuttles run every 10 minutes from the North Gate.',
             'gate': 'The North Gate is currently the fastest way in or out. The South Gate and East Gate are also open.',
             'emergency': 'For emergencies, contact staff immediately or visit First Aid at the South Gate. Call 911 if critical.',
-            'help': 'I\\'m your AI guide! Ask me about food, crowds, schedules, or locations. For example: "Where should I get food?"',
-            'hi': 'Hello! I\\'m here to help you navigate the event. What do you need assistance with today?',
-            'hello': 'Hi there! I am your AI event assistant. How can I help make your day better?'
+            'help': "I'm your AI guide! Ask me about food, crowds, schedules, or locations. For example: 'Where should I get food?'",
+            'hi': "Hello! I'm here to help you navigate the event. What do you need assistance with today?",
+            'hello': "Hi there! I am your AI event assistant. How can I help make your day better?"
         };
-
         for (const [key, val] of Object.entries(intents)) {
             if (lower.includes(key)) return val;
         }
@@ -302,35 +301,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function addMessage(text, isUser = false) {
         const msgDiv = document.createElement('div');
-        msgDiv.className = \`message \${isUser ? 'user-message' : 'ai-message'}\`;
-        
-        let avatarHTML = isUser 
-            ? \`<img src="https://ui-avatars.com/api/?name=User&background=00F2FE&color=fff&bold=true" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" alt="User">\`
-            : \`<i class="fa-solid fa-sparkles"></i>\`;
-            
+        msgDiv.className = `message ${isUser ? 'user-message' : 'ai-message'}`;
+
+        let avatarHTML = isUser
+            ? `<img src="https://ui-avatars.com/api/?name=User&background=00F2FE&color=fff&bold=true" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" alt="User">`
+            : `<i class="fa-solid fa-sparkles"></i>`;
+
         let avatarClass = isUser ? 'user-avatar' : 'ai-avatar';
-        
-        msgDiv.innerHTML = \`
-            <div class="avatar \${avatarClass}">\${avatarHTML}</div>
-            <div class="bubble">\${text}</div>
-        \`;
-        
+
+        msgDiv.innerHTML = `
+            <div class="avatar ${avatarClass}">${avatarHTML}</div>
+            <div class="bubble">${text}</div>
+        `;
+
         chatMessages.appendChild(msgDiv);
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
     function showTypingIndicator() {
         const typingDiv = document.createElement('div');
-        typingDiv.className = \`message ai-message typing-indicator\`;
+        typingDiv.className = `message ai-message typing-indicator`;
         typingDiv.id = 'typing';
-        typingDiv.innerHTML = \`
+        typingDiv.innerHTML = `
             <div class="avatar ai-avatar"><i class="fa-solid fa-sparkles"></i></div>
             <div class="bubble">
                 <span class="typing-dot"></span>
                 <span class="typing-dot"></span>
                 <span class="typing-dot"></span>
             </div>
-        \`;
+        `;
         chatMessages.appendChild(typingDiv);
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
