@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexEvent AI Assistant</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-background">
+        <div class="glow blob-1"></div>
+        <div class="glow blob-2"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- HEADER -->
+        <header class="glass-panel main-header">
+            <div class="logo">
+                <i class="fa-solid fa-hexagon-nodes logo-icon"></i>
+                <h1>Nex<span class="highlight">Event</span></h1>
+            </div>
+            <div class="header-stats">
+                <div class="stat blur-pill">
+                    <i class="fa-solid fa-users"></i> <span id="total-attendees">12,450</span>
+                </div>
+                <div class="stat blur-pill">
+                    <i class="fa-regular fa-clock"></i> <span id="current-time">10:45 AM</span>
+                </div>
+            </div>
+            <div class="user-profile border-gradient">
+                <img src="https://ui-avatars.com/api/?name=User&background=00F2FE&color=fff&bold=true" alt="User Avatar">
+            </div>
+        </header>
+
+        <!-- CHATBOT SECTION -->
+        <section class="glass-panel chat-container">
+            <div class="panel-header">
+                <div class="header-title">
+                    <i class="fa-solid fa-robot accent-icon"></i>
+                    <h2>Event Concierge AI</h2>
+                </div>
+                <div class="status-indicator">
+                    <span class="pulse"></span> Online
+                </div>
+            </div>
+            
+            <div class="chat-messages" id="chat-messages">
+                <div class="message ai-message">
+                    <div class="avatar ai-avatar"><i class="fa-solid fa-sparkles"></i></div>
+                    <div class="bubble">Hello! I'm your NexEvent AI assistant. How can I help you navigate the venue or find information today?</div>
+                </div>
+            </div>
+
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Ask about schedules, locations, or crowds..." autocomplete="off">
+                <button id="send-btn" class="glow-btn">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- RIGHT DASHBOARD -->
+        <section class="dashboard-area">
+            
+            <!-- Crowd Density Panel -->
+            <div class="glass-panel density-panel">
+                <div class="panel-header">
+                    <div class="header-title">
+                        <i class="fa-solid fa-chart-pie accent-icon"></i>
+                        <h2>Crowd Density & Wait Times</h2>
+                    </div>
+                </div>
+                
+                <div class="metrics-grid">
+                    <!-- Metric Card 1 -->
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <h3>Main Stage</h3>
+                            <span class="badge danger">High</span>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-fill danger-fill" style="width: 85%;"></div>
+                        </div>
+                        <div class="metric-footer">
+                            <span><i class="fa-solid fa-users"></i> 4,500 people</span>
+                            <span><i class="fa-regular fa-clock"></i> ~25m wait</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Metric Card 2 -->
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <h3>Food Court A</h3>
+                            <span class="badge warning">Busy</span>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-fill warning-fill" style="width: 65%;"></div>
+                        </div>
+                        <div class="metric-footer">
+                            <span><i class="fa-solid fa-users"></i> 850 people</span>
+                            <span><i class="fa-regular fa-clock"></i> ~15m wait</span>
+                        </div>
+                    </div>
+
+                    <!-- Metric Card 3 -->
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <h3>Tech Expo Hall</h3>
+                            <span class="badge info">Moderate</span>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-fill info-fill" style="width: 45%;"></div>
+                        </div>
+                        <div class="metric-footer">
+                            <span><i class="fa-solid fa-users"></i> 1,200 people</span>
+                            <span><i class="fa-regular fa-clock"></i> ~5m wait</span>
+                        </div>
+                    </div>
+
+                    <!-- Metric Card 4 -->
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <h3>Restroom (North)</h3>
+                            <span class="badge success">Clear</span>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-fill success-fill" style="width: 15%;"></div>
+                        </div>
+                        <div class="metric-footer">
+                            <span><i class="fa-solid fa-users"></i> 12 people</span>
+                            <span><i class="fa-regular fa-clock"></i> No wait</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Smart Routes Panel -->
+            <div class="glass-panel routes-panel">
+                <div class="panel-header">
+                    <div class="header-title">
+                        <i class="fa-solid fa-route accent-icon"></i>
+                        <h2>AI Route Suggestions</h2>
+                    </div>
+                    <button class="icon-btn" id="refresh-routes" title="Refresh Route Details"><i class="fa-solid fa-rotate"></i></button>
+                </div>
+                
+                <div class="route-list">
+                    <!-- Route 1 -->
+                    <div class="route-item best-route">
+                        <div class="route-icon"><i class="fa-solid fa-bolt"></i></div>
+                        <div class="route-content">
+                            <div class="route-top">
+                                <h4>Main Stage ➔ Food Court B</h4>
+                                <span class="time-saved">5 mins est.</span>
+                            </div>
+                            <p>Via Outer Corridor • Avoids Expo Hall congestion</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Route 2 -->
+                    <div class="route-item alt-route">
+                        <div class="route-icon"><i class="fa-solid fa-person-walking"></i></div>
+                        <div class="route-content">
+                            <div class="route-top">
+                                <h4>Main Stage ➔ East Restrooms</h4>
+                                <span class="time-saved">3 mins est.</span>
+                            </div>
+                            <p>Via Service Hallway • Low foot traffic</p>
+                        </div>
+                    </div>
+
+                    <!-- Route Alert -->
+                    <div class="route-item alert-route">
+                        <div class="route-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                        <div class="route-content">
+                            <h4>Crowd Alert: Central Plaza</h4>
+                            <p>Currently at capacity. Please detour via South Wing.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
