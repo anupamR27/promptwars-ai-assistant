@@ -178,6 +178,7 @@ body {
     font-size: 1.8rem;
     background: var(--accent-gradient);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -209,6 +210,24 @@ body {
     gap: 8px;
     color: var(--text-muted);
 }
+
+.location-dropdown {
+    background: transparent;
+    border: none;
+    color: var(--text-main);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+}
+
+.location-dropdown option {
+    background: var(--bg-dark);
+    color: var(--text-main);
+}
+
 
 .blur-pill span {
     color: var(--text-main);
@@ -394,6 +413,57 @@ body {
     flex-direction: column;
     gap: 24px;
 }
+
+/* BEST OPTIONS PANEL */
+.best-options-panel {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 242, 254, 0.05) 100%);
+    border: 1px solid rgba(0, 242, 254, 0.2);
+}
+
+.best-options-grid {
+    padding: 0 24px 24px 24px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.best-option-card {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.best-option-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(0, 242, 254, 0.1);
+    color: var(--accent-cyan);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.best-option-content h4 {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.best-option-content p {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
 
 /* CROWD DENSITY PANEL */
 .density-panel {

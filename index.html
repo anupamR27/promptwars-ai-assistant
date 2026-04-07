@@ -27,7 +27,17 @@
                 <h1>Nex<span class="highlight">Event</span></h1>
             </div>
             <div class="header-stats">
-                <div class="stat blur-pill">
+                <div class="stat blur-pill location-selector">
+                    <i class="fa-solid fa-location-dot"></i> 
+                    <select id="user-location-select" class="location-dropdown">
+                        <option value="Main Stage">Main Stage</option>
+                        <option value="Food Court A">Food Court A</option>
+                        <option value="Tech Expo Hall">Tech Expo Hall</option>
+                        <option value="North Gate">North Gate</option>
+                        <option value="South Gate">South Gate</option>
+                    </select>
+                </div>
+                <div class="stat blur-pill hidden-mobile">
                     <i class="fa-solid fa-users"></i> <span id="total-attendees">12,450</span>
                 </div>
                 <div class="stat blur-pill">
@@ -69,6 +79,19 @@
         <!-- RIGHT DASHBOARD -->
         <section class="dashboard-area">
             
+            <!-- Best Options Summary Panel -->
+            <div class="glass-panel best-options-panel">
+                 <div class="panel-header">
+                     <div class="header-title">
+                         <i class="fa-solid fa-star accent-icon" style="color: #f5a623;"></i>
+                         <h2>Best Options Right Now</h2>
+                     </div>
+                 </div>
+                 <div class="best-options-grid" id="best-options-grid">
+                     <!-- Populated by JS -->
+                 </div>
+            </div>
+
             <!-- Crowd Density Panel -->
             <div class="glass-panel density-panel">
                 <div class="panel-header">
@@ -78,7 +101,7 @@
                     </div>
                 </div>
                 
-                <div class="metrics-grid">
+                <div class="metrics-grid" id="metrics-grid">
                     <!-- Metric Card 1 -->
                     <div class="metric-card">
                         <div class="metric-header">
@@ -151,7 +174,7 @@
                     <button class="icon-btn" id="refresh-routes" title="Refresh Route Details"><i class="fa-solid fa-rotate"></i></button>
                 </div>
                 
-                <div class="route-list">
+                <div class="route-list" id="route-list">
                     <!-- Route 1 -->
                     <div class="route-item best-route">
                         <div class="route-icon"><i class="fa-solid fa-bolt"></i></div>
