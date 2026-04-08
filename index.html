@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,12 +8,15 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <div class="app-background">
         <div class="glow blob-1"></div>
@@ -28,7 +32,7 @@
             </div>
             <div class="header-stats">
                 <div class="stat blur-pill location-selector">
-                    <i class="fa-solid fa-location-dot"></i> 
+                    <i class="fa-solid fa-location-dot"></i>
                     <select id="user-location-select" class="location-dropdown">
                         <option value="Main Stage">Main Stage</option>
                         <option value="Food Court A">Food Court A</option>
@@ -45,7 +49,8 @@
                 </div>
             </div>
             <div class="user-profile border-gradient">
-                <img src="https://ui-avatars.com/api/?name=User&background=00F2FE&color=fff&bold=true" alt="User Avatar">
+                <img src="https://ui-avatars.com/api/?name=User&background=00F2FE&color=fff&bold=true"
+                    alt="User Avatar">
             </div>
         </header>
 
@@ -60,16 +65,18 @@
                     <span class="pulse"></span> Online
                 </div>
             </div>
-            
+
             <div class="chat-messages" id="chat-messages">
                 <div class="message ai-message">
                     <div class="avatar ai-avatar"><i class="fa-solid fa-sparkles"></i></div>
-                    <div class="bubble">Hello! I'm your NexEvent AI assistant. How can I help you navigate the venue or find information today?</div>
+                    <div class="bubble">Hello! I'm your NexEvent AI assistant. How can I help you navigate the venue or
+                        find information today?</div>
                 </div>
             </div>
 
             <div class="chat-input-area">
-                <input type="text" id="chat-input" placeholder="Ask about schedules, locations, or crowds..." autocomplete="off">
+                <input type="text" id="chat-input" placeholder="Ask about schedules, locations, or crowds..."
+                    autocomplete="off">
                 <button id="send-btn" class="glow-btn">
                     <i class="fa-solid fa-paper-plane"></i>
                 </button>
@@ -78,18 +85,18 @@
 
         <!-- RIGHT DASHBOARD -->
         <section class="dashboard-area">
-            
+
             <!-- Best Options Summary Panel -->
             <div class="glass-panel best-options-panel">
-                 <div class="panel-header">
-                     <div class="header-title">
-                         <i class="fa-solid fa-star accent-icon" style="color: #f5a623;"></i>
-                         <h2>Best Options Right Now</h2>
-                     </div>
-                 </div>
-                 <div class="best-options-grid" id="best-options-grid">
-                     <!-- Populated by JS -->
-                 </div>
+                <div class="panel-header">
+                    <div class="header-title">
+                        <i class="fa-solid fa-star accent-icon" style="color: #f5a623;"></i>
+                        <h2>Best Options Right Now</h2>
+                    </div>
+                </div>
+                <div class="best-options-grid" id="best-options-grid">
+                    <!-- Populated by JS -->
+                </div>
             </div>
 
             <!-- Crowd Density Panel -->
@@ -100,7 +107,7 @@
                         <h2>Crowd Density & Wait Times</h2>
                     </div>
                 </div>
-                
+
                 <div class="metrics-grid" id="metrics-grid">
                     <!-- Metric Card 1 -->
                     <div class="metric-card">
@@ -116,7 +123,7 @@
                             <span><i class="fa-regular fa-clock"></i> ~25m wait</span>
                         </div>
                     </div>
-                    
+
                     <!-- Metric Card 2 -->
                     <div class="metric-card">
                         <div class="metric-header">
@@ -171,9 +178,10 @@
                         <i class="fa-solid fa-route accent-icon"></i>
                         <h2>AI Route Suggestions</h2>
                     </div>
-                    <button class="icon-btn" id="refresh-routes" title="Refresh Route Details"><i class="fa-solid fa-rotate"></i></button>
+                    <button class="icon-btn" id="refresh-routes" title="Refresh Route Details"><i
+                            class="fa-solid fa-rotate"></i></button>
                 </div>
-                
+
                 <div class="route-list" id="route-list">
                     <!-- Route 1 -->
                     <div class="route-item best-route">
@@ -186,7 +194,7 @@
                             <p>Via Outer Corridor • Avoids Expo Hall congestion</p>
                         </div>
                     </div>
-                    
+
                     <!-- Route 2 -->
                     <div class="route-item alt-route">
                         <div class="route-icon"><i class="fa-solid fa-person-walking"></i></div>
@@ -215,4 +223,5 @@
 
     <script src="app.js"></script>
 </body>
+
 </html>
