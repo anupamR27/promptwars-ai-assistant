@@ -338,7 +338,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const typingDiv = document.getElementById('typing');
         if (typingDiv) typingDiv.remove();
     }
-
+    /*
+        function handleUserInput() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+    
+            addMessage(text, true);
+            chatInput.value = '';
+    
+            const response = generateAIResponse(text);
+    
+            showTypingIndicator();
+            setTimeout(() => {
+                removeTypingIndicator();
+                addMessage(response);
+            }, 1000 + Math.random() * 1000);
+        }
+    */
+    //-----------------------------------------------------------------------------
     function handleUserInput() {
         const text = chatInput.value.trim();
         if (!text) return;
@@ -346,14 +363,27 @@ document.addEventListener('DOMContentLoaded', () => {
         addMessage(text, true);
         chatInput.value = '';
 
-        const response = generateAIResponse(text);
-
         showTypingIndicator();
-        setTimeout(() => {
-            removeTypingIndicator();
-            addMessage(response);
-        }, 1000 + Math.random() * 1000);
+
+        fetch("http://127.0.0.1:5000/chat", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ message: text })
+        })
+            .then(res => res.json())
+            .then(data => {
+                removeTypingIndicator();
+                addMessage(data.reply || "No response from AI");
+            })
+            .catch(err => {
+                removeTypingIndicator();
+                addMessage("Server error. Make sure backend is running.");
+                console.error(err);
+            });
     }
+    //-----------------------------------------------------------------------------
 
     if (sendBtn) sendBtn.addEventListener('click', handleUserInput);
     if (chatInput) {
