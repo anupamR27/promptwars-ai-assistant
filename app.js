@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ---- STATE MANAGEMENT ----
     const state = {
+        animated: false,
         userLocation: 'Main Stage',
         locations: {
             'Main Stage': { capacity: 85, people: 4500, waitTime: 25 },
@@ -47,11 +48,60 @@ document.addEventListener('DOMContentLoaded', () => {
         return { badge: 'success', text: 'Clear', fill: 'success-fill' };
     }
 
+    //--------------------------------------------------------------------------
+    // function renderDashboard() {
+    //     if (!metricsGrid) return;
+    //     metricsGrid.innerHTML = ''; // clear
+
+    //     // Define which locations to show on dashboard broadly
+    //     const dashboardLocations = ['Main Stage', 'Food Court A', 'Tech Expo Hall', 'North Gate'];
+
+    //     dashboardLocations.forEach(locName => {
+    //         const locData = state.locations[locName];
+    //         if (!locData) return;
+
+    //         const status = getStatusForCapacity(locData.capacity);
+    //         const waitText = locData.waitTime > 0 ? `~${locData.waitTime}m wait` : 'No wait';
+
+    //         const card = document.createElement('div');
+    //         card.className = 'metric-card';
+    //         card.innerHTML = `
+    //             <div class="metric-header">
+    //                 <h3>${locName}</h3>
+    //                 <span class="badge ${status.badge}">${status.text}</span>
+    //             </div>
+    //             <div class="progress-track">
+    //                 <div class="progress-fill ${status.fill}" style="width: ${locData.capacity}%;"></div>
+    //             </div>
+    //             <div class="metric-footer">
+    //                 <span><i class="fa-solid fa-users"></i> ${locData.people.toLocaleString()} people</span>
+    //                 <span><i class="fa-regular fa-clock"></i> ${waitText}</span>
+    //             </div>
+    //         `;
+    //         metricsGrid.appendChild(card);
+
+    //         // Animate progress bar from 0 to target width
+    //         const fill = card.querySelector('.progress-fill');
+    //         if (fill) {
+    //             const targetWidth = fill.style.width;
+    //             fill.style.width = '0%';
+    //             requestAnimationFrame(() => {
+    //                 requestAnimationFrame(() => {
+    //                     fill.style.width = targetWidth;
+    //                 });
+    //             });
+    //         }
+
+    //         // Add pulse to danger badges (capacity > 80%)
+    //         const badge = card.querySelector('.badge.danger');
+    //         if (badge) {
+    //             badge.classList.add('badge-pulse');
+    //         }
+    //     });
+    //--------------------------------------------------------------------------
     function renderDashboard() {
         if (!metricsGrid) return;
-        metricsGrid.innerHTML = ''; // clear
 
-        // Define which locations to show on dashboard broadly
         const dashboardLocations = ['Main Stage', 'Food Court A', 'Tech Expo Hall', 'North Gate'];
 
         dashboardLocations.forEach(locName => {
@@ -61,24 +111,38 @@ document.addEventListener('DOMContentLoaded', () => {
             const status = getStatusForCapacity(locData.capacity);
             const waitText = locData.waitTime > 0 ? `~${locData.waitTime}m wait` : 'No wait';
 
-            const card = document.createElement('div');
-            card.className = 'metric-card';
+            // ✅ Check if card already exists — just UPDATE it, don't recreate it
+            let card = document.getElementById(`card-${locName.replace(/\s/g, '-')}`);
+
+            if (!card) {
+                // First time — create the card with animation
+                card = document.createElement('div');
+                card.className = 'metric-card fade-in';
+                card.id = `card-${locName.replace(/\s/g, '-')}`;
+                metricsGrid.appendChild(card);
+            }
+
+            // Always update the content without re-triggering animation
             card.innerHTML = `
-                <div class="metric-header">
-                    <h3>${locName}</h3>
-                    <span class="badge ${status.badge}">${status.text}</span>
-                </div>
-                <div class="progress-track">
-                    <div class="progress-fill ${status.fill}" style="width: ${locData.capacity}%;"></div>
-                </div>
-                <div class="metric-footer">
-                    <span><i class="fa-solid fa-users"></i> ${locData.people.toLocaleString()} people</span>
-                    <span><i class="fa-regular fa-clock"></i> ${waitText}</span>
-                </div>
-            `;
-            metricsGrid.appendChild(card);
+            <div class="metric-header">
+                <h3>${locName}</h3>
+                <span class="badge ${status.badge}">${status.text}</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill ${status.fill}" style="width: ${locData.capacity}%;"></div>
+            </div>
+            <div class="metric-footer">
+                <span><i class="fa-solid fa-users"></i> ${locData.people.toLocaleString()} people</span>
+                <span><i class="fa-regular fa-clock"></i> ${waitText}</span>
+            </div>
+        `;
+        });
+        // Staggered fade-in for metric cards
+        metricsGrid.querySelectorAll('.metric-card').forEach((card, i) => {
+            setTimeout(() => card.classList.add('card-visible'), i * 120);
         });
     }
+
 
     function renderBestOptions() {
         if (!bestOptionsGrid) return;
@@ -132,6 +196,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
         `;
+
+        // Staggered fade-in for best-option cards
+        bestOptionsGrid.querySelectorAll('.best-option-card').forEach((card, i) => {
+            setTimeout(() => card.classList.add('card-visible'), i * 100);
+        });
     }
 
     renderDashboard();
@@ -226,9 +295,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
         `;
+
+        animateRouteItems();
     }
 
     generateRoutes();
+
+    // ---- HELPER: Animate route items after DOM insert ----
+    function animateRouteItems() {
+        if (!routeList) return;
+        routeList.querySelectorAll('.route-item').forEach((item, i) => {
+            setTimeout(() => item.classList.add('card-visible'), i * 100);
+        });
+    }
 
     // ---- CONTEXT-AWARE CHATBOT LOGIC ----
     const chatInput = document.getElementById('chat-input');
@@ -370,7 +449,24 @@ document.addEventListener('DOMContentLoaded', () => {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ message: text })
+            body: JSON.stringify({
+                message: text,
+                context: {
+                    userLocation: state.userLocation,
+                    mainStage: state.locations['Main Stage'].capacity,
+                    mainStageWait: state.locations['Main Stage'].waitTime,
+                    foodCourtA: state.locations['Food Court A'].capacity,
+                    foodCourtAWait: state.locations['Food Court A'].waitTime,
+                    foodCourtB: state.locations['Food Court B'].capacity,
+                    foodCourtBWait: state.locations['Food Court B'].waitTime,
+                    techExpo: state.locations['Tech Expo Hall'].capacity,
+                    techExpoWait: state.locations['Tech Expo Hall'].waitTime,
+                    northGate: state.locations['North Gate'].capacity,
+                    southGate: state.locations['South Gate'].capacity,
+                    totalPeople: Object.values(state.locations).reduce((sum, l) => sum + l.people, 0),
+                    currentTime: new Date().toLocaleTimeString()
+                }
+            })
         })
             .then(res => res.json())
             .then(data => {
