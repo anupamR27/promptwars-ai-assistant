@@ -206,6 +206,78 @@ document.addEventListener('DOMContentLoaded', () => {
     renderDashboard();
     renderBestOptions();
 
+    // ---- STADIUM EVENTS ----
+    const stadiumEventsData = {
+        '1': [
+            { name: 'Opening Ceremony', time: '9:00 AM – 9:45 AM', desc: 'Grand welcome with keynote speakers and live performances.', icon: 'fa-microphone-lines' },
+            { name: 'Tech Talk: Future of AI', time: '10:00 AM – 11:00 AM', desc: 'Industry leaders discuss the next wave of artificial intelligence.', icon: 'fa-brain' },
+            { name: 'Startup Pitch Arena', time: '11:30 AM – 1:00 PM', desc: 'Watch 10 startups pitch to a panel of top investors.', icon: 'fa-rocket' },
+            { name: 'Closing DJ Set', time: '8:00 PM – 10:00 PM', desc: 'End the day with electrifying beats from DJ Nova.', icon: 'fa-music' }
+        ],
+        '2': [
+            { name: 'Robotics Workshop', time: '9:30 AM – 11:00 AM', desc: 'Hands-on session building and programming mini robots.', icon: 'fa-robot' },
+            { name: 'Gaming Tournament', time: '11:30 AM – 2:00 PM', desc: 'Compete in multiplayer esports across three game titles.', icon: 'fa-gamepad' },
+            { name: 'VR Experience Zone', time: '2:30 PM – 5:00 PM', desc: 'Immersive virtual reality demos from top studios.', icon: 'fa-vr-cardboard' }
+        ],
+        '3': [
+            { name: 'Wellness & Yoga', time: '8:00 AM – 9:00 AM', desc: 'Morning yoga session to energize your day.', icon: 'fa-spa' },
+            { name: 'Panel: Sustainability in Tech', time: '10:00 AM – 11:30 AM', desc: 'How tech companies are going green and reducing carbon footprints.', icon: 'fa-leaf' },
+            { name: 'Art & Design Showcase', time: '12:00 PM – 3:00 PM', desc: 'Digital art installations and live design battles.', icon: 'fa-palette' },
+            { name: 'Networking Mixer', time: '5:00 PM – 7:00 PM', desc: 'Connect with professionals over food and drinks.', icon: 'fa-handshake' }
+        ],
+        '4': [
+            { name: 'Hackathon Kickoff', time: '9:00 AM – 9:30 AM', desc: 'Teams assemble and receive their challenge prompts.', icon: 'fa-code' },
+            { name: 'Mentor Office Hours', time: '10:00 AM – 12:00 PM', desc: 'Get guidance from industry mentors on your project.', icon: 'fa-chalkboard-user' },
+            { name: 'Hackathon Demo Day', time: '3:00 PM – 5:00 PM', desc: 'Teams present their solutions to judges and audience.', icon: 'fa-trophy' }
+        ]
+    };
+
+    let activeStadium = '1';
+    const stadiumToggleBar = document.getElementById('stadium-toggle-bar');
+    const stadiumEventsList = document.getElementById('stadium-events-list');
+
+    function renderStadiumEvents(stadiumId) {
+        if (!stadiumEventsList) return;
+        stadiumEventsList.innerHTML = '';
+
+        const events = stadiumEventsData[stadiumId] || [];
+        events.forEach(ev => {
+            const card = document.createElement('div');
+            card.className = 'stadium-event-card';
+            card.innerHTML = `
+                <div class="stadium-event-icon"><i class="fa-solid ${ev.icon}"></i></div>
+                <div class="stadium-event-info">
+                    <h4>${ev.name}</h4>
+                    <div class="stadium-event-time"><i class="fa-regular fa-clock"></i> ${ev.time}</div>
+                    <p>${ev.desc}</p>
+                </div>
+            `;
+            stadiumEventsList.appendChild(card);
+        });
+
+        // Staggered fade-in
+        stadiumEventsList.querySelectorAll('.stadium-event-card').forEach((card, i) => {
+            setTimeout(() => card.classList.add('card-visible'), i * 100);
+        });
+    }
+
+    if (stadiumToggleBar) {
+        stadiumToggleBar.addEventListener('click', (e) => {
+            const btn = e.target.closest('.stadium-btn');
+            if (!btn) return;
+
+            // Toggle active state
+            stadiumToggleBar.querySelectorAll('.stadium-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            activeStadium = btn.dataset.stadium;
+            renderStadiumEvents(activeStadium);
+        });
+    }
+
+    // Initial render
+    renderStadiumEvents(activeStadium);
+
     // ---- SIMULATION ENGINE ----
     // Periodically adjust crowds mathematically to make it alive
     setInterval(() => {
